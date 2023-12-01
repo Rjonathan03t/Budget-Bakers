@@ -10,10 +10,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountCrudOperations  implements CrudOperations <Account> {
+public class AccountCrudOperations implements CrudOperations<Account> {
     private Connection connection;
 
-    public AccountCrudOperations (Connection connection) {
+    public AccountCrudOperations(Connection connection) {
         this.connection = connection;
     }
 
@@ -21,15 +21,15 @@ public class AccountCrudOperations  implements CrudOperations <Account> {
     public List<Account> findAll() throws SQLException {
         List<Account> allAccount = new ArrayList<>();
         String sql = "SELECT * FROM account";
-        try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             ResultSet result = preparedStatement.executeQuery();
-            while(result.next()){
+            while (result.next()) {
                 allAccount.add(new Account(
-                        result.getInt("id_account"),
-                        result.getString("username"),
-                        result.getInt("number"),
-                        result.getInt("balance"),
-                        result.getString("status")
+                                result.getInt("id_account"),
+                                result.getString("username"),
+                                result.getInt("number"),
+                                result.getInt("balance"),
+                                result.getString("status")
                         )
                 );
             }
@@ -40,16 +40,55 @@ public class AccountCrudOperations  implements CrudOperations <Account> {
 
     @Override
     public List<Account> saveAll(List<Account> toSave) throws SQLException {
-        return null;
+        List<Account> allAccount = new ArrayList<>();
+        String sql = "INSERT INTO account (id_account, username, number, balance, status) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try {
+            for (Account account : toSave) {
+                preparedStatement.setInt(1, account.getId_account());
+                preparedStatement.setString(2, account.getUsername());
+                preparedStatement.setInt(3, account.getNumber());
+                preparedStatement.setInt(4, account.getBalance());
+                preparedStatement.setString(5, account.getStatus());
+                preparedStatement.addBatch();
+            }
+            preparedStatement.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("INSERT 01");
+        return allAccount;
     }
 
     @Override
     public Account save(Account toSave) throws SQLException {
-        return null;
+        String sql = "INSERT INTO account (id_account, username, number, balance, status) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try {
+            preparedStatement.setInt(1, toSave.getId_account());
+            preparedStatement.setString(2, toSave.getUsername());
+            preparedStatement.setInt(3, toSave.getNumber());
+            preparedStatement.setInt(4, toSave.getBalance());
+            preparedStatement.setString(5, toSave.getStatus());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("INSERT 01");
+        return toSave;
     }
 
     @Override
     public Account delete(Account toDelete) throws SQLException {
-        return null;
+        String sql = "DELETE FROM account WHERE id_account = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try{
+            preparedStatement.setInt(1, toDelete.getId_account());
+            preparedStatement.executeUpdate();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        System.out.println("DELETE 01");
+        return toDelete;
     }
 }
