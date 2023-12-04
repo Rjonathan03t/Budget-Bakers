@@ -41,6 +41,18 @@ public class Main {
             //accountCrudOperations.delete(account1);
             //accountCrudOperations.delete(account2);
 
+            // Currency CRUD
+            CurrencyCrudOperations currencyCrudOperations = new CurrencyCrudOperations(connection);
+            //====FIND ALL
+            currencyCrudOperations.findAll();
+
+            //====SAVE
+            Currency currency = new Currency(1, "USD", "US Dollar");
+            currencyCrudOperations.save(currency);
+
+            //====DELETE
+            currencyCrudOperations.delete(currency);
+
         } catch (Exception e) {
             System.out.println("Error about DB connection!");
             e.printStackTrace();
