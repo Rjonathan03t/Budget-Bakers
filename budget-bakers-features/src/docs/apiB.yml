@@ -56,6 +56,21 @@ paths:
                 items:
                   $ref: '#/components/schemas/currency'
 
+  /CurrencyAssociation:
+    get:
+      summary: Get all currency associations
+      description: Retrieve a list of all currency associations.
+      operationId: getCurrencyAssociations
+      responses:
+        200:
+          description: The list of currency associations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/currencyAssociation'
+
 components:
   schemas:
     account:
@@ -84,3 +99,13 @@ components:
           type: string
         name:
           type: string
+
+    currencyAssociation:
+      type: object
+      properties:
+        id_association:
+          type: integer
+        id_account:
+          type: integer
+        id_currency:
+          type: integer
