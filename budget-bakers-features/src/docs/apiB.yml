@@ -40,6 +40,22 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/account'
+
+  /Currency:
+    get:
+      summary: Get all currencies
+      description: Retrieve a list of all available currencies.
+      operationId: getCurrencies
+      responses:
+        200:
+          description: The list of currencies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/currency'
+
 components:
   schemas:
     account:
@@ -58,3 +74,13 @@ components:
           enum:
             - ACTIVE
             - INACTIVE
+
+    currency:
+      type: object
+      properties:
+        id_currency:
+          type: integer
+        code:
+          type: string
+        name:
+          type: string
