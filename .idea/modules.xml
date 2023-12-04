@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Budget-Bakers.iml" filepath="$PROJECT_DIR$/Budget-Bakers.iml" />
+      <module fileurl="file://$PROJECT_DIR$/budget-bakers-features.iml" filepath="$PROJECT_DIR$/budget-bakers-features.iml" />
     </modules>
   </component>
 </project>
