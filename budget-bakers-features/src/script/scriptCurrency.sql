@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS currency (
+   id_currency INT PRIMARY KEY,
+   code VARCHAR(3) NOT NULL,
+   name VARCHAR(255) NOT NULL
+);
